@@ -43,11 +43,13 @@ bool checkPalindrome(int palindrome){
 int main(){
     int num1 = 999;
     int num2 = 999;
+    int num2_iterator = num2;
     int product; 
     int biggest_palindrome = 0;
 
+    
     for(int i = num1; i>num1/10;i--){
-        for(int j= num2;j>num2/10;j--){
+        for(int j= num2_iterator;j>num2/10;j--){ 
             product = i * j;
             if(checkPalindrome(product) == true){
                 if(biggest_palindrome < product){
@@ -55,6 +57,7 @@ int main(){
                 }
             }
         }
+        num2_iterator--; //Once 999 is checked entirely, num2 should be initialized lower, as to not have to check through 999 amounts anymore, to remove redundant values.
     }
 
 cout << "The biggest palindrome is: " << biggest_palindrome;
