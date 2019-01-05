@@ -10,22 +10,25 @@
 //Currently the code does not correctly work for 5 digit numbers, so it assumes that there will be a bigger 6 digit answer as the biggest palindrome. Will fix later.
 
 #include <iostream>
+#include <bits/stdc++.h> 
 using namespace std;
 
 //Checks for palindrome by comparing biggest and smallest array locations incrementally towards middle
 bool checkPalindrome(int palindrome){
-    int count = 6;
-    int product[count];
+    vector<int> product;
     bool test;
+    int length = 0;
 
-    //Splits integer into array of digits
-    for(int i=0;i<count;i++){
-        product[i] = palindrome % 10;
+    //Splits integer into array of digits. This technically mirrors the output, but it doesn't matter when checking.
+    while(palindrome > 0){
+        product.push_back(palindrome % 10);
+        length++;
         palindrome /= 10;
     }
 
-    for(int i = 0; i< count/2; i++){
-        if(product[i] == product[count-1-i]){
+    //If count is odd, it does not have to check the middle value
+    for(int i = 0; i< length/2; i++){
+        if(product[i] == product[length-1-i]){
             test = true;
         }
         else{
@@ -37,15 +40,14 @@ bool checkPalindrome(int palindrome){
     return test;
 }
 
-//Working backwards from 999 will mean the first digit found is the biggest number
 int main(){
     int num1 = 999;
     int num2 = 999;
     int product; 
     int biggest_palindrome = 0;
 
-    for(int i = num1; i>99;i--){
-        for(int j= num2;j>99;j--){
+    for(int i = num1; i>num1/10;i--){
+        for(int j= num2;j>num2/10;j--){
             product = i * j;
             if(checkPalindrome(product) == true){
                 if(biggest_palindrome < product){
